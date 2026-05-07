@@ -28,6 +28,8 @@ import {
   Calendar,
   AlertTriangle
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/store/authStore';
 
 const COLORS = ['#0EA5E9', '#06B6D4', '#2DD4BF', '#F43F5E', '#F59E0B', '#8B5CF6'];
 
