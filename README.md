@@ -1,26 +1,51 @@
-# Centralized Medical Solutions
+# Hospital-POS (Centralized Medical Solutions)
 
-This is a project for centralized medical solutions.
+A Multi-Tenant Hospital Equipment Management SaaS Platform built with the MERN stack (Next.js 14, Express, MongoDB, Node.js).
 
-## Description
+## 🚀 Features
 
-[Add description here]
+- **Multi-Tenancy**: Complete isolation between hospital data.
+- **Role-Based Access Control (RBAC)**: Super Admin, Hospital Admin, Engineer, and Staff roles.
+- **Equipment Management**: Track lifecycle, status, condition, and location of every medical device.
+- **Maintenance Scheduling**: Automated next maintenance date calculation and email/socket notifications.
+- **Digital Service Reports**: Engineers can submit reports with images and digital signatures.
+- **QR Code Integration**: Scan equipment QR codes for instant access to history and reporting.
+- **Real-Time Notifications**: Socket.io integration for instant alerts on breakdowns and assignments.
+- **Analytics Dashboard**: Comprehensive KPIs for both platform level and hospital level.
+- **Audit Logs**: Immutable logs for every critical action in the system.
 
-## Installation
+## 🛠 Tech Stack
 
-[Add installation instructions]
+- **Frontend**: Next.js 14 (App Router), Tailwind CSS, shadcn/ui, Zustand, React Query.
+- **Backend**: Node.js, Express.js, TypeScript, Socket.io, Winston.
+- **Database**: MongoDB (Mongoose).
+- **Automation**: Node-cron for maintenance alerts and SLA tracking.
+- **Reports**: Puppeteer for PDF generation.
 
-## Usage
+## 📦 Installation
 
-[Add usage instructions]
+### Backend
+1. `cd backend`
+2. `npm install`
+3. Create `.env` (use `.env.example` as a template)
+4. `npm run dev`
 
-## Contributing
+### Frontend
+1. `cd frontend`
+2. `npm install`
+3. Create `.env.local`
+4. `npm run dev`
 
-[Add contributing guidelines]
+## 🛡 Security
 
-## License
+- JWT Authentication with HttpOnly Cookies.
+- Tenant Isolation middleware (`enforceHospitalScope`).
+- Input validation using Zod.
+- Rate limiting and Helmet.js for header protection.
 
-[Add license information]
+## 📜 License
 
-Super Admin: superadmin@cms.com / Admin@123
-Hospital Admin: admin@shalom.com / Shalom@123
+ISC License
+
+---
+Built with ❤️ for Medical Facilities.

@@ -8,6 +8,7 @@ dist/
 .next/
 out/
 build/
+*.tsbuildinfo
 
 # Environment variables
 .env
@@ -15,6 +16,8 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
+frontend/.env.local
 
 # Debug logs
 npm-debug.log*
@@ -31,8 +34,13 @@ yarn-error.log*
 
 # Static assets / Uploads
 uploads/
+backend/uploads/
 frontend/public/uploads/
 
-# TypeScript
-*.tsbuildinfo
+# Next.js specific
 next-env.d.ts
+
+# Misc
+.vercel
+.turbo
+coverage/
