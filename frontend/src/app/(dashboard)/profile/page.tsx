@@ -8,18 +8,59 @@ import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/PasswordInput';
 import { User, Mail, ShieldCheck, Lock, Building2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import api from '@/lib/axios';
+import { useRouter } from 'next/navigation';
 
 export default function ProfilePage() {
-  const user = useAuthStore((state) => state.user);
+  const { user, logout } = useAuthStore();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [passLoading, setPassLoading] = useState(false);
+  
+  const [passwords, setPasswords] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
-  const handleUpdateProfile = (e: React.FormEvent) => {
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      // For now we only support name update
+      const name = (e.target as any).elements[0].value;
+      await api.patch('/users/me', { name });
       toast.success('Profile updated successfully.');
-    }, 1000);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to update profile.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      return toast.error('Passwords do not match.');
+    }
+    if (passwords.newPassword.length < 6) {
+      return toast.error('Password must be at least 6 characters.');
+    }
+
+    setPassLoading(true);
+    try {
+      await api.patch('/auth/change-password', {
+        currentPassword: passwords.currentPassword,
+        newPassword: passwords.newPassword
+      });
+      toast.success('Password updated! Please login again.');
+      logout();
+      router.push('/login');
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to update password.');
+    } finally {
+      setPassLoading(false);
+    }
   };
 
   return (
@@ -91,17 +132,41 @@ export default function ProfilePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Password</label>
+                <PasswordInput 
+                  value={passwords.currentPassword}
+                  onChange={(e) => setPasswords({...passwords, currentPassword: e.target.value})}
+                  placeholder="••••••••" 
+                  required
+                  className="rounded-xl" 
+                />
+              </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">New Password</label>
-                <PasswordInput placeholder="••••••••" className="rounded-xl" />
+                <PasswordInput 
+                  value={passwords.newPassword}
+                  onChange={(e) => setPasswords({...passwords, newPassword: e.target.value})}
+                  placeholder="••••••••" 
+                  required
+                  className="rounded-xl" 
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirm New Password</label>
-                <PasswordInput placeholder="••••••••" className="rounded-xl" />
+                <PasswordInput 
+                  value={passwords.confirmPassword}
+                  onChange={(e) => setPasswords({...passwords, confirmPassword: e.target.value})}
+                  placeholder="••••••••" 
+                  required
+                  className="rounded-xl" 
+                />
               </div>
               <div className="pt-4">
-                <Button variant="outline" className="rounded-xl px-8">Update Password</Button>
+                <Button disabled={passLoading} type="submit" variant="outline" className="rounded-xl px-8">
+                  {passLoading ? 'Updating...' : 'Update Password'}
+                </Button>
               </div>
             </form>
           </CardContent>

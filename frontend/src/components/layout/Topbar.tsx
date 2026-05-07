@@ -2,13 +2,13 @@
 
 import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
-import { Bell, Search, LogOut, User as UserIcon } from 'lucide-react';
+import { Bell, Search, LogOut, User as UserIcon, Menu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios';
 import NotificationPanel from './NotificationPanel';
 
-export default function Topbar() {
+export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   const { user, logout } = useAuthStore();
   const router = useRouter();
 
@@ -25,8 +25,19 @@ export default function Topbar() {
   };
 
   return (
-    <header className="h-16 border-b border-slate-100 bg-white sticky top-0 z-30 px-8 flex items-center justify-between">
-      <div className="flex-1 max-w-md relative hidden md:block">
+  return (
+    <header className="h-16 border-b border-slate-100 bg-white sticky top-0 z-30 px-4 md:px-8 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={onMenuClick}
+          className="lg:hidden text-slate-500"
+        >
+          <Menu size={24} />
+        </Button>
+        
+        <div className="flex-1 max-w-md relative hidden md:block">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
         <input 
           type="text" 

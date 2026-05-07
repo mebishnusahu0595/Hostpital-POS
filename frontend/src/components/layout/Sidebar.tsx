@@ -15,10 +15,11 @@ import {
   FileText,
   Building2,
   Megaphone,
-  PlusCircle
+  PlusCircle,
+  X
 } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: boolean) => void }) {
   const pathname = usePathname();
   const { user } = useAuthStore();
   const role = user?.role;
@@ -61,15 +62,24 @@ export default function Sidebar() {
   const navItems = getNavItems();
 
   return (
-    <aside className="w-64 bg-medical-navy text-white h-screen fixed left-0 top-0 z-40 flex flex-col">
-      <div className="flex justify-center pt-8 pb-4">
+    <aside className={cn(
+      "w-64 bg-medical-navy text-white h-screen fixed left-0 top-0 z-40 flex flex-col transition-transform duration-300 lg:translate-x-0",
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    )}>
+      <div className="flex items-center justify-between px-6 pt-8 pb-4">
         <Link href="/" className="flex flex-col items-center gap-4">
           <img 
             src="/images/image.png" 
             alt="CMS Logo" 
-            className="h-20 w-auto object-contain transition-transform hover:scale-105"
+            className="h-12 lg:h-16 w-auto object-contain transition-transform hover:scale-105"
           />
         </Link>
+        <button 
+          onClick={() => setIsOpen(false)}
+          className="lg:hidden text-white/50 hover:text-white"
+        >
+          <X size={24} />
+        </button>
       </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1">

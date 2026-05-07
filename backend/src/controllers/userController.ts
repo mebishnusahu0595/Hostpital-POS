@@ -173,3 +173,20 @@ export const forceResetPassword = asyncHandler(async (req: Request, res: Respons
     message: 'Password reset successfully',
   });
 });
+
+// @desc    Update current user profile
+// @route   PATCH /api/v1/users/me
+// @access  Protected
+export const updateMe = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  const { name } = req.body;
+  
+  const user = await User.findByIdAndUpdate(req.user?._id, { name }, {
+    new: true,
+    runValidators: true,
+  }).select('-passwordHash -refreshToken');
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
