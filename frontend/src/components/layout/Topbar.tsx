@@ -25,7 +25,6 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   };
 
   return (
-  return (
     <header className="h-16 border-b border-slate-100 bg-white sticky top-0 z-30 px-4 md:px-8 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <Button 
@@ -45,6 +44,7 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           className="w-full bg-slate-50 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-medical-blue/20 outline-none transition-all"
         />
       </div>
+    </div>
 
       <div className="flex items-center gap-4 ml-auto">
         <NotificationPanel />
