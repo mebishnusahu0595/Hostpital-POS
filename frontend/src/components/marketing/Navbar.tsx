@@ -46,7 +46,6 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <Link href="#features" className="text-sm font-medium hover:text-medical-blue transition-colors">Features</Link>
           <Link href="#how-it-works" className="text-sm font-medium hover:text-medical-blue transition-colors">How It Works</Link>
-          <Link href="#pricing" className="text-sm font-medium hover:text-medical-blue transition-colors">Pricing</Link>
           <Link href="#contact" className="text-sm font-medium hover:text-medical-blue transition-colors">Contact</Link>
         </div>
 
@@ -127,7 +126,6 @@ export default function Navbar() {
         <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-100 shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
           <Link href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium">Features</Link>
           <Link href="#how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium">How It Works</Link>
-          <Link href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium">Pricing</Link>
           <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium">Contact</Link>
           <div className="pt-4 flex flex-col gap-3">
             {!isAuthenticated && (

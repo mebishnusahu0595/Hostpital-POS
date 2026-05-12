@@ -44,7 +44,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Email Us</p>
-                    <p className="text-white font-medium">sales@cmsmedical.com</p>
+                    <p className="text-white font-medium">info@cmslinc.com</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -53,7 +53,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Call Us</p>
-                    <p className="text-white font-medium">+91 98765 43210</p>
+                    <p className="text-white font-medium">856-448-7350</p>
                   </div>
                 </div>
               </div>
