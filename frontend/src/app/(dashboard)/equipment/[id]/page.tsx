@@ -107,7 +107,11 @@ export default function EquipmentDetailPage() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Location</p>
-                  <p className="text-sm font-medium text-medical-navy">{item.location || 'N/A'}</p>
+                  <p className="text-sm font-medium text-medical-navy">
+                    {typeof item.location === 'object' 
+                      ? (item.location.room || item.location.building || 'N/A') 
+                      : (item.location || 'N/A')}
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Category</p>

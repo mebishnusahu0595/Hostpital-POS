@@ -129,7 +129,11 @@ export default function EquipmentListPage() {
                       </td>
                       <td className="px-6 py-5">
                          <div className="text-xs font-bold text-slate-600">{item.department || 'General Facility'}</div>
-                         <div className="text-[10px] text-slate-400 mt-0.5">{item.location?.room || 'All Blocks'}</div>
+                         <div className="text-[10px] text-slate-400 mt-0.5">
+                           {typeof item.location === 'object' 
+                             ? (item.location.room || item.location.building || 'All Blocks') 
+                             : (item.location || 'All Blocks')}
+                         </div>
                       </td>
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
