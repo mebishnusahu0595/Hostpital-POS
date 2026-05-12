@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { EditEquipmentModal } from '@/components/equipment/EditEquipmentModal';
 
 export default function EquipmentDetailPage() {
   const { id } = useParams();
@@ -72,11 +73,7 @@ export default function EquipmentDetailPage() {
           <Button variant="outline" className="rounded-xl gap-2">
             <QrCode size={18} /> View QR
           </Button>
-          <Link href={`/equipment/${id}/edit`}>
-            <Button className="bg-medical-navy hover:bg-medical-navy/90 text-white rounded-xl gap-2">
-              <Edit3 size={18} /> Edit Details
-            </Button>
-          </Link>
+          <EditEquipmentModal equipment={item} />
         </div>
       </div>
 
