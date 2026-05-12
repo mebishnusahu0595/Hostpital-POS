@@ -129,13 +129,19 @@ export default function ServiceReportsPage() {
              </CardHeader>
              <CardContent className="space-y-2">
                 <Button variant="ghost" className="w-full justify-between text-xs font-medium text-slate-600 hover:text-medical-blue hover:bg-medical-blue/5 h-9 rounded-lg px-3">
-                  Open Reports <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full text-[10px]">12</span>
+                  Open Reports <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full text-[10px]">
+                    {reports?.filter((r: any) => r.status === 'open').length || 0}
+                  </span>
                 </Button>
                 <Button variant="ghost" className="w-full justify-between text-xs font-medium text-slate-600 hover:text-medical-blue hover:bg-medical-blue/5 h-9 rounded-lg px-3">
-                  Assigned <span className="bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full text-[10px]">8</span>
+                  Assigned <span className="bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full text-[10px]">
+                    {reports?.filter((r: any) => r.status === 'assigned').length || 0}
+                  </span>
                 </Button>
                 <Button variant="ghost" className="w-full justify-between text-xs font-medium text-slate-600 hover:text-medical-blue hover:bg-medical-blue/5 h-9 rounded-lg px-3">
-                  Resolved <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-[10px]">45</span>
+                  Resolved <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-[10px]">
+                    {reports?.filter((r: any) => r.status === 'resolved').length || 0}
+                  </span>
                 </Button>
              </CardContent>
            </Card>

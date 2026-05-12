@@ -108,7 +108,7 @@ export default function ProfilePage() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white/50 uppercase tracking-wider">Facility</p>
-                    <p className="text-sm font-bold truncate">Shalom Medical Center</p>
+                    <p className="text-sm font-bold truncate">{user?.hospitalId || 'Facility Portal'}</p>
                   </div>
                 </div>
                 <div className="space-y-2">
