@@ -13,12 +13,15 @@ export const createEquipmentSchema = z.object({
   purchaseDate: z.string().optional(),
   purchasePrice: z.number().optional(),
   warrantyExpiry: z.string().optional(),
-  location: z.object({
-    building: z.string().optional(),
-    floor: z.string().optional(),
-    ward: z.string().optional(),
-    room: z.string().optional(),
-  }).optional(),
+  location: z.union([
+    z.string(),
+    z.object({
+      building: z.string().optional(),
+      floor: z.string().optional(),
+      ward: z.string().optional(),
+      room: z.string().optional(),
+    })
+  ]).optional(),
   status: z.enum(['active', 'under_maintenance', 'out_of_service', 'decommissioned']).optional(),
   condition: z.enum(['excellent', 'good', 'fair', 'poor']).optional(),
   maintenanceFrequency: z.enum(['weekly', 'monthly', 'quarterly', 'biannual', 'annual']),
@@ -34,12 +37,15 @@ export const updateEquipmentSchema = z.object({
   modelNumber: z.string().optional(),
   manufacturer: z.string().optional(),
   vendor: z.string().optional(),
-  location: z.object({
-    building: z.string().optional(),
-    floor: z.string().optional(),
-    ward: z.string().optional(),
-    room: z.string().optional(),
-  }).optional(),
+  location: z.union([
+    z.string(),
+    z.object({
+      building: z.string().optional(),
+      floor: z.string().optional(),
+      ward: z.string().optional(),
+      room: z.string().optional(),
+    })
+  ]).optional(),
   status: z.enum(['active', 'under_maintenance', 'out_of_service', 'decommissioned']).optional(),
   condition: z.enum(['excellent', 'good', 'fair', 'poor']).optional(),
   maintenanceFrequency: z.enum(['weekly', 'monthly', 'quarterly', 'biannual', 'annual']).optional(),

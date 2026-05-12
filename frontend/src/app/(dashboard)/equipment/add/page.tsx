@@ -35,8 +35,20 @@ export default function AddEquipmentPage() {
     e.preventDefault();
     setLoading(true);
 
+    // Format data for backend
+    const data = {
+      ...formData,
+      location: {
+        building: formData.location
+      },
+      warrantyExpiry: formData.warrantyExpirationDate
+    };
+    
+    // Remove old fields
+    delete (data as any).warrantyExpirationDate;
+
     try {
-      await api.post('/equipment', formData);
+      await api.post('/equipment', data);
       toast.success('Equipment added successfully');
       router.push('/equipment');
     } catch (error: any) {
@@ -80,7 +92,24 @@ export default function AddEquipmentPage() {
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-medical-navy">Category *</label>
-                <Input name="category" placeholder="e.g. Imaging" required value={formData.category} onChange={handleChange} />
+                <select 
+                  name="category" 
+                  required 
+                  value={formData.category} 
+                  onChange={handleChange}
+                  className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-medical-blue/20"
+                >
+                  <option value="">Select Category</option>
+                  <option value="imaging">Imaging</option>
+                  <option value="monitoring">Monitoring</option>
+                  <option value="laboratory">Laboratory</option>
+                  <option value="surgical">Surgical</option>
+                  <option value="life_support">Life Support</option>
+                  <option value="diagnostic">Diagnostic</option>
+                  <option value="rehabilitation">Rehabilitation</option>
+                  <option value="sterilization">Sterilization</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-medical-navy">Department</label>

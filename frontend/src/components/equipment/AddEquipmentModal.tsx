@@ -25,7 +25,19 @@ export function AddEquipmentModal() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const rawData = Object.fromEntries(formData.entries());
+    
+    // Format data for backend
+    const data = {
+      ...rawData,
+      location: {
+        building: rawData.location as string
+      },
+      warrantyExpiry: rawData.warrantyExpirationDate
+    };
+    
+    // Remove the old fields
+    delete (data as any).warrantyExpirationDate;
 
     try {
       await api.post('/equipment', data);
@@ -67,7 +79,22 @@ export function AddEquipmentModal() {
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Category *</label>
-              <Input name="category" placeholder="e.g. Imaging" required className="rounded-xl h-11" />
+              <select 
+                name="category" 
+                required
+                className="w-full h-11 px-3 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-medical-blue/20"
+              >
+                <option value="">Select Category</option>
+                <option value="imaging">Imaging</option>
+                <option value="monitoring">Monitoring</option>
+                <option value="laboratory">Laboratory</option>
+                <option value="surgical">Surgical</option>
+                <option value="life_support">Life Support</option>
+                <option value="diagnostic">Diagnostic</option>
+                <option value="rehabilitation">Rehabilitation</option>
+                <option value="sterilization">Sterilization</option>
+                <option value="other">Other</option>
+              </select>
             </div>
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Department</label>
