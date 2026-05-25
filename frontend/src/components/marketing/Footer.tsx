@@ -13,7 +13,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-slate-500 max-w-sm leading-relaxed mb-8">
-              Empowering healthcare facilities across India with state-of-the-art equipment management software. Increase uptime, ensure compliance, and save lives.
+              Empowering healthcare facilities with state-of-the-art equipment management software. Increase uptime, ensure compliance, and save lives.
             </p>
           </div>
           

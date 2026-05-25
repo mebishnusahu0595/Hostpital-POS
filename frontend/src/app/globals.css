@@ -3,7 +3,7 @@
 
 @theme inline {
   --font-sans: var(--font-dm-sans);
-  --font-heading: var(--font-instrument-serif);
+  --font-heading: var(--font-dm-sans);
   
   --color-medical-navy: #0A1628;
   --color-medical-blue: #0EA5E9;

@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-medical-blue/10 text-medical-blue text-sm font-medium mb-6 animate-fade-in">
-            Trusted by leading hospitals across India
+            Trusted by leading hospitals
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-medical-navy mb-6 leading-[1.1]">
             Stop Managing Equipment. <br />
@@ -17,7 +17,7 @@ export default function Hero() {
           <p className="text-lg text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Centralized Medical Solutions replaces scattered spreadsheets, 
             manual registers, and reactive maintenance with one powerful 
-            platform built specifically for Indian healthcare.
+            platform built specifically for healthcare.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/login">
