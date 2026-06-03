@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed:superadmin": "ts-node src/utils/seed.ts",
-    "seed:full": "ts-node src/utils/fullSeed.ts"
+    "seed:full": "ts-node src/utils/fullSeed.ts",
+    "seed:scm": "ts-node src/utils/seedScm.ts"
   },
   "keywords": [],
   "author": "",
