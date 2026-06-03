@@ -6,17 +6,23 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/PasswordInput';
-import { User, Mail, ShieldCheck, Lock, Building2 } from 'lucide-react';
+import { User, Lock, Building2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
+import AvatarUpload from '@/components/profile/AvatarUpload';
 
 export default function ProfilePage() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, updateUser } = useAuthStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [passLoading, setPassLoading] = useState(false);
-  
+
+  const [profile, setProfile] = useState({
+    name: user?.name || '',
+    phone: user?.phone || '',
+  });
+
   const [passwords, setPasswords] = useState({
     currentPassword: '',
     newPassword: '',
@@ -27,9 +33,8 @@ export default function ProfilePage() {
     e.preventDefault();
     setLoading(true);
     try {
-      // For now we only support name update
-      const name = (e.target as any).elements[0].value;
-      await api.patch('/users/me', { name });
+      const res = await api.patch('/users/me', { name: profile.name, phone: profile.phone });
+      updateUser({ name: res.data.data.name, phone: res.data.data.phone });
       toast.success('Profile updated successfully.');
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Failed to update profile.');
@@ -82,14 +87,27 @@ export default function ProfilePage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
-                  <Input defaultValue={user?.name} className="rounded-xl" />
+                  <Input
+                    value={profile.name}
+                    onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                    className="rounded-xl"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
                   <Input defaultValue={user?.email} disabled className="rounded-xl bg-slate-50" />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Phone</label>
+                  <Input
+                    value={profile.phone}
+                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                    placeholder="e.g. +91 98765 43210"
+                    className="rounded-xl"
+                  />
+                </div>
               </div>
-              
+
               <div className="pt-4">
                 <Button disabled={loading} className="bg-medical-navy text-white rounded-xl px-8">
                   {loading ? 'Saving...' : 'Save Changes'}
@@ -100,6 +118,12 @@ export default function ProfilePage() {
         </Card>
 
         <div className="space-y-6">
+           <Card className="border-none shadow-sm">
+             <CardContent className="p-6">
+               <AvatarUpload />
+             </CardContent>
+           </Card>
+
            <Card className="border-none shadow-sm bg-medical-navy text-white">
              <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">

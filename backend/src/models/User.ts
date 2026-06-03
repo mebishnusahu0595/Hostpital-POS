@@ -6,10 +6,12 @@ export interface IUser extends Document {
   email: string;
   phone?: string;
   passwordHash: string;
-  role: 'super_admin' | 'hospital_admin' | 'engineer' | 'staff';
+  role: 'super_admin' | 'hospital_admin' | 'engineer' | 'staff' | 'scm_manager';
   isActive: boolean;
   avatar?: string;
   refreshToken?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpire?: Date;
   lastLogin?: Date;
   createdBy?: mongoose.Types.ObjectId;
   createdAt: Date;
@@ -25,12 +27,14 @@ const userSchema = new Schema<IUser>(
     passwordHash: { type: String, required: true },
     role: {
       type: String,
-      enum: ['super_admin', 'hospital_admin', 'engineer', 'staff'],
+      enum: ['super_admin', 'hospital_admin', 'engineer', 'staff', 'scm_manager'],
       required: true,
     },
     isActive: { type: Boolean, default: true },
     avatar: { type: String },
     refreshToken: { type: String },
+    resetPasswordToken: { type: String },
+    resetPasswordExpire: { type: Date },
     lastLogin: { type: Date },
     createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
   },

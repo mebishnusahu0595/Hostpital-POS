@@ -18,6 +18,7 @@ import analyticsRoutes from './routes/analyticsRoutes';
 import auditLogRoutes from './routes/auditLogRoutes';
 import leadRoutes from './routes/leadRoutes';
 import announcementRoutes from './routes/announcementRoutes';
+import scmRoutes from './routes/scmRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -86,6 +87,7 @@ app.use('/api/v1/analytics', analyticsRoutes);
 app.use('/api/v1/leads', leadRoutes);
 app.use('/api/v1/audit-logs', auditLogRoutes);
 app.use('/api/v1/announcements', announcementRoutes);
+app.use('/api/v1/scm', scmRoutes);
 
 // Basic health route
 app.get('/api/v1/health', (req: Request, res: Response) => {

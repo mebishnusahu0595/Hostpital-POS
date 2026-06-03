@@ -6,21 +6,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import toast from 'react-hot-toast';
 import { ArrowLeft } from 'lucide-react';
+import api from '@/lib/axios';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await api.post('/auth/forgot-password', { email });
       setSent(true);
-      toast.success("Reset link sent if account exists.");
-    }, 1500);
+      toast.success('If an account exists, a reset link has been sent.');
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

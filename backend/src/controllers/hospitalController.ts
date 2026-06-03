@@ -95,6 +95,11 @@ export const getHospital = asyncHandler(async (req: Request, res: Response, next
     return next(new AppError('Hospital not found', 404));
   }
 
+  // Tenant isolation: a hospital_admin may only access their own facility.
+  if (req.user?.role !== 'super_admin' && hospital._id.toString() !== req.user?.hospitalId?.toString()) {
+    return next(new AppError('Not authorized to access this facility', 403));
+  }
+
   const equipmentStats = await Equipment.aggregate([
     { $match: { hospitalId: hospital._id } },
     { $group: {
@@ -130,6 +135,11 @@ export const updateHospital = asyncHandler(async (req: Request, res: Response, n
   if (req.file) {
     updateData.logo = `/uploads/${req.file.filename}`;
     console.log('Logo path being saved:', updateData.logo);
+  }
+
+  // Tenant isolation: a hospital_admin may only update their own facility.
+  if (req.user?.role !== 'super_admin' && req.params.id !== req.user?.hospitalId?.toString()) {
+    return next(new AppError('Not authorized to update this facility', 403));
   }
 
   const hospital = await Hospital.findByIdAndUpdate(req.params.id, updateData, {
@@ -196,6 +206,11 @@ export const suspendHospital = asyncHandler(async (req: Request, res: Response, 
 // @access  Super Admin / Hospital Admin (own)
 export const getHospitalStats = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const hospitalId = req.params.id;
+
+  // Tenant isolation: a hospital_admin may only view their own facility's stats.
+  if (req.user?.role !== 'super_admin' && hospitalId !== req.user?.hospitalId?.toString()) {
+    return next(new AppError('Not authorized to access this facility', 403));
+  }
 
   const equipmentCount = await Equipment.countDocuments({ hospitalId });
   const activeEquipment = await Equipment.countDocuments({ hospitalId, status: 'active' });

@@ -38,6 +38,8 @@ function LoginForm() {
       } else {
         if (data.role === 'super_admin') {
           router.push('/super/dashboard');
+        } else if (data.role === 'scm_manager') {
+          router.push('/scm/dashboard');
         } else {
           router.push('/dashboard');
         }

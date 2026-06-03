@@ -32,7 +32,7 @@ export const verifyToken = asyncHandler(async (req: Request, res: Response, next
 });
 
 // Enforce specific roles
-export const requireRole = (roles: Array<'super_admin' | 'hospital_admin' | 'engineer' | 'staff'>) => {
+export const requireRole = (roles: Array<'super_admin' | 'hospital_admin' | 'engineer' | 'staff' | 'scm_manager'>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user || !roles.includes(req.user.role)) {
       return next(new AppError(`Role ${req.user?.role} is not authorized to access this route`, 403));

@@ -7,8 +7,10 @@ import {
   deleteUser,
   forceResetPassword,
   updateMe,
+  updateMyAvatar,
 } from '../controllers/userController';
 import { verifyToken, requireRole, enforceHospitalScope } from '../middleware/auth';
+import { uploadImage } from '../middleware/upload';
 import { validate } from '../middleware/validate';
 import {
   createUserSchema,
@@ -22,6 +24,7 @@ router.use(verifyToken);
 
 // Any authenticated user can update their own profile
 router.patch('/me', updateMe);
+router.post('/me/avatar', uploadImage.single('avatar'), updateMyAvatar);
 
 router.use(enforceHospitalScope);
 router.use(requireRole(['super_admin', 'hospital_admin']));

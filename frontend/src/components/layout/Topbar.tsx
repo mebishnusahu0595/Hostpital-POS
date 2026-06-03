@@ -2,10 +2,11 @@
 
 import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
-import { Bell, Search, LogOut, User as UserIcon, Menu } from 'lucide-react';
+import { Search, LogOut, Menu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import api from '@/lib/axios';
+import { mediaUrl } from '@/lib/utils';
 import NotificationPanel from './NotificationPanel';
 
 export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
@@ -56,7 +57,18 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
             <p className="text-sm font-bold text-medical-navy">{user?.name}</p>
             <p className="text-[10px] text-slate-500 font-medium">{user?.hospitalId ? 'Hospital Portal' : 'Platform Control'}</p>
           </div>
-          
+
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-medical-blue/10 flex items-center justify-center shrink-0">
+            {user?.avatar ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={mediaUrl(user.avatar)} alt={user?.name || 'Avatar'} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-xs font-bold text-medical-blue">
+                {user?.name?.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+              </span>
+            )}
+          </div>
+
           <Button 
             variant="ghost" 
             size="icon" 

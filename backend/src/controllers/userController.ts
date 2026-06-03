@@ -178,12 +178,38 @@ export const forceResetPassword = asyncHandler(async (req: Request, res: Respons
 // @route   PATCH /api/v1/users/me
 // @access  Protected
 export const updateMe = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const { name } = req.body;
-  
-  const user = await User.findByIdAndUpdate(req.user?._id, { name }, {
+  const { name, phone } = req.body;
+
+  const updates: { name?: string; phone?: string } = {};
+  if (name !== undefined) updates.name = name;
+  if (phone !== undefined) updates.phone = phone;
+
+  const user = await User.findByIdAndUpdate(req.user?._id, updates, {
     new: true,
     runValidators: true,
   }).select('-passwordHash -refreshToken');
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+// @desc    Upload/update current user avatar
+// @route   POST /api/v1/users/me/avatar
+// @access  Protected
+export const updateMyAvatar = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.file) {
+    return next(new AppError('Please upload an image', 400));
+  }
+
+  const avatar = `/uploads/${req.file.filename}`;
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    { avatar },
+    { new: true }
+  ).select('-passwordHash -refreshToken');
 
   res.status(200).json({
     success: true,

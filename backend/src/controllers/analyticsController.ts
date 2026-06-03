@@ -174,18 +174,39 @@ export const getDashboardStats = asyncHandler(async (req: Request, res: Response
       status: { $ne: 'resolved' }
     }).sort('-createdAt').limit(5);
 
-    // Mock uptime trend based on real status (to avoid hardcoding in frontend)
-    // In a real app, this would be a historical log, but for now we'll derive it
+    // Uptime trend (last 6 months) derived from real breakdown logs.
+    // Per month: uptime = 100% minus the share of equipment that suffered an
+    // unplanned breakdown (corrective/emergency maintenance) that month.
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const breakdownsByMonth = await MaintenanceLog.aggregate([
+      {
+        $match: {
+          hospitalId,
+          type: { $in: ['corrective', 'emergency'] },
+          createdAt: { $gte: sixMonthsAgo }
+        }
+      },
+      {
+        $group: {
+          _id: { month: { $month: '$createdAt' }, year: { $year: '$createdAt' } },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
     const uptimeTrend = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date();
       d.setMonth(d.getMonth() - i);
-      const baseUptime = complianceScore > 0 ? complianceScore : 95;
-      const variance = (Math.random() * 4) - 2;
+      const match = breakdownsByMonth.find(
+        (b) => b._id.month === d.getMonth() + 1 && b._id.year === d.getFullYear()
+      );
+      const breakdownCount = match ? match.count : 0;
+      const uptime = totalEquipment > 0
+        ? Math.max(0, 100 - (breakdownCount / totalEquipment) * 100)
+        : 100;
       uptimeTrend.push({
         name: monthNames[d.getMonth()],
-        uptime: parseFloat(Math.min(100, Math.max(90, baseUptime + variance)).toFixed(1))
+        uptime: parseFloat(uptime.toFixed(1))
       });
     }
  

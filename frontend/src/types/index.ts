@@ -1,4 +1,4 @@
-export type Role = 'super_admin' | 'hospital_admin' | 'engineer' | 'staff';
+export type Role = 'super_admin' | 'hospital_admin' | 'engineer' | 'staff' | 'scm_manager';
 
 export interface User {
   _id: string;
@@ -7,6 +7,7 @@ export interface User {
   role: Role;
   hospitalId?: string;
   avatar?: string;
+  phone?: string;
   isActive: boolean;
 }
 

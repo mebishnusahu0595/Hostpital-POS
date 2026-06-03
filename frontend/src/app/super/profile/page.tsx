@@ -1,25 +1,71 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/PasswordInput';
-import { User, Mail, ShieldCheck, Lock, Bell } from 'lucide-react';
+import { User, ShieldCheck, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
+import api from '@/lib/axios';
+import AvatarUpload from '@/components/profile/AvatarUpload';
 
 export default function SuperProfilePage() {
-  const user = useAuthStore((state) => state.user);
+  const { user, logout, updateUser } = useAuthStore();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [passLoading, setPassLoading] = useState(false);
 
-  const handleUpdateProfile = (e: React.FormEvent) => {
+  const [profile, setProfile] = useState({
+    name: user?.name || '',
+    phone: user?.phone || '',
+  });
+
+  const [passwords, setPasswords] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const res = await api.patch('/users/me', { name: profile.name, phone: profile.phone });
+      updateUser({ name: res.data.data.name, phone: res.data.data.phone });
+      toast.success('Profile updated successfully.');
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to update profile.');
+    } finally {
       setLoading(false);
-      toast.success('Profile settings updated successfully.');
-    }, 1000);
+    }
+  };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      return toast.error('Passwords do not match.');
+    }
+    if (passwords.newPassword.length < 6) {
+      return toast.error('Password must be at least 6 characters.');
+    }
+
+    setPassLoading(true);
+    try {
+      await api.patch('/auth/change-password', {
+        currentPassword: passwords.currentPassword,
+        newPassword: passwords.newPassword,
+      });
+      toast.success('Password updated! Please login again.');
+      logout();
+      router.push('/login');
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to update password.');
+    } finally {
+      setPassLoading(false);
+    }
   };
 
   return (
@@ -41,14 +87,27 @@ export default function SuperProfilePage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
-                  <Input defaultValue={user?.name} className="rounded-xl" />
+                  <Input
+                    value={profile.name}
+                    onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                    className="rounded-xl"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
                   <Input defaultValue={user?.email} disabled className="rounded-xl bg-slate-50" />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Phone</label>
+                  <Input
+                    value={profile.phone}
+                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                    placeholder="e.g. +91 98765 43210"
+                    className="rounded-xl"
+                  />
+                </div>
               </div>
-              
+
               <div className="pt-4">
                 <Button disabled={loading} className="bg-medical-navy text-white rounded-xl px-8">
                   {loading ? 'Saving...' : 'Save Changes'}
@@ -59,40 +118,28 @@ export default function SuperProfilePage() {
         </Card>
 
         <div className="space-y-6">
-           <Card className="border-none shadow-sm bg-blue-50/50">
-             <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-medical-blue text-white flex items-center justify-center">
-                    <ShieldCheck size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase">Role</p>
-                    <p className="text-sm font-bold text-medical-navy uppercase">Platform Admin</p>
-                  </div>
-                </div>
-                <p className="text-[10px] text-slate-500 leading-relaxed">
-                  You have full administrative access to the platform, including hospital onboarding and revenue management.
-                </p>
-             </CardContent>
-           </Card>
+          <Card className="border-none shadow-sm">
+            <CardContent className="p-6">
+              <AvatarUpload />
+            </CardContent>
+          </Card>
 
-           <Card className="border-none shadow-sm">
-             <CardHeader>
-               <CardTitle className="text-sm flex items-center gap-2">
-                 <Lock size={14} /> Security Status
-               </CardTitle>
-             </CardHeader>
-             <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500">Two-Factor Auth</span>
-                  <span className="text-[10px] font-bold text-red-500 uppercase">Disabled</span>
+          <Card className="border-none shadow-sm bg-blue-50/50">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-medical-blue text-white flex items-center justify-center">
+                  <ShieldCheck size={20} />
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500">Session Timeout</span>
-                  <span className="text-[10px] font-bold text-slate-700 uppercase">15 Minutes</span>
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase">Role</p>
+                  <p className="text-sm font-bold text-medical-navy uppercase">Platform Admin</p>
                 </div>
-             </CardContent>
-           </Card>
+              </div>
+              <p className="text-[10px] text-slate-500 leading-relaxed">
+                You have full administrative access to the platform, including hospital onboarding and revenue management.
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <Card className="md:col-span-2 border-none shadow-sm">
@@ -102,23 +149,43 @@ export default function SuperProfilePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Password</label>
-                <PasswordInput placeholder="••••••••" className="rounded-xl" />
+                <PasswordInput
+                  value={passwords.currentPassword}
+                  onChange={(e) => setPasswords({ ...passwords, currentPassword: e.target.value })}
+                  placeholder="••••••••"
+                  required
+                  className="rounded-xl"
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">New Password</label>
-                  <PasswordInput placeholder="••••••••" className="rounded-xl" />
+                  <PasswordInput
+                    value={passwords.newPassword}
+                    onChange={(e) => setPasswords({ ...passwords, newPassword: e.target.value })}
+                    placeholder="••••••••"
+                    required
+                    className="rounded-xl"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Confirm New Password</label>
-                  <PasswordInput placeholder="••••••••" className="rounded-xl" />
+                  <PasswordInput
+                    value={passwords.confirmPassword}
+                    onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
+                    placeholder="••••••••"
+                    required
+                    className="rounded-xl"
+                  />
                 </div>
               </div>
               <div className="pt-4">
-                <Button variant="outline" className="rounded-xl px-8">Update Password</Button>
+                <Button disabled={passLoading} type="submit" variant="outline" className="rounded-xl px-8">
+                  {passLoading ? 'Updating...' : 'Update Password'}
+                </Button>
               </div>
             </form>
           </CardContent>

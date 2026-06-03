@@ -137,6 +137,7 @@ export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
                 >
                   <option value="staff">Staff / Nurse</option>
                   <option value="engineer">Service Engineer</option>
+                  <option value="scm_manager">Supply Chain Manager</option>
                   <option value="hospital_admin">Department Admin</option>
                 </select>
               </div>

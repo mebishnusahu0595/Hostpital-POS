@@ -6,27 +6,33 @@ interface EmailOptions {
   html: string;
 }
 
-export const sendEmail = async (options: EmailOptions) => {
-  // Create a transporter
-  const transporter = nodemailer.createTransport({
+const buildTransporter = () => {
+  const port = parseInt(process.env.SMTP_PORT || '587', 10);
+  // Port 465 uses implicit TLS (secure); 587/25 use STARTTLS.
+  const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+  return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
-    port: parseInt(process.env.SMTP_PORT || '2525'),
+    port,
+    secure,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
   });
+};
 
-  // Define email options
-  const mailOptions = {
-    from: `"CMS Platform" <noreply@cms-medical.com>`,
+export const sendEmail = async (options: EmailOptions) => {
+  const transporter = buildTransporter();
+
+  // Many providers require the From address to match the authenticated mailbox.
+  const from = process.env.FROM_EMAIL || process.env.SMTP_USER || 'noreply@oncorg.com';
+
+  await transporter.sendMail({
+    from,
     to: options.to,
     subject: options.subject,
     html: options.html,
-  };
-
-  // Send email
-  await transporter.sendMail(mailOptions);
+  });
 };
 
 export const sendCriticalIssueEmail = async (report: any, hospital: any, equipment: any) => {
