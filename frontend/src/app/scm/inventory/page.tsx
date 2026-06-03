@@ -53,7 +53,7 @@ export default function InventoryPage() {
         { name: 'unit', label: 'Unit (vial, box...)', type: 'text' },
         { name: 'quantity', label: 'Quantity', type: 'number' },
         { name: 'reorderLevel', label: 'Reorder Level', type: 'number' },
-        { name: 'unitCost', label: 'Unit Cost (₹)', type: 'number' },
+        { name: 'unitCost', label: 'Unit Cost ($)', type: 'number' },
         { name: 'batchNumber', label: 'Batch Number', type: 'text' },
         { name: 'expiryDate', label: 'Expiry Date', type: 'date' },
         { name: 'supplierId', label: 'Supplier', type: 'select', optionsEndpoint: '/scm/suppliers', optionLabel: 'name' },

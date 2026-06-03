@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 const plans = [
   {
     name: "FREE",
-    price: "₹0",
+    price: "$0",
     period: "/month",
     description: "Perfect for small clinics",
     features: [
@@ -18,7 +18,7 @@ const plans = [
   },
   {
     name: "BASIC",
-    price: "₹999",
+    price: "$999",
     period: "/month",
     description: "For growing nursing homes",
     features: [
@@ -33,7 +33,7 @@ const plans = [
   },
   {
     name: "PRO",
-    price: "₹2,499",
+    price: "$2,499",
     period: "/month",
     description: "For multispecialty hospitals",
     features: [

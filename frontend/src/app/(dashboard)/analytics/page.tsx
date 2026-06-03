@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
         <Card className="border-none shadow-sm bg-white overflow-hidden">
           <CardHeader className="border-b border-slate-50 bg-slate-50/30">
             <CardTitle className="text-lg font-bold text-medical-navy">Maintenance Cost Trend</CardTitle>
-            <CardDescription>Expenditure across last 6 months in INR</CardDescription>
+            <CardDescription>Expenditure across last 6 months in USD</CardDescription>
           </CardHeader>
           <CardContent className="pt-8">
             <div className="h-[300px]">

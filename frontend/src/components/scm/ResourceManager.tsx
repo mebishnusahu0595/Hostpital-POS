@@ -136,7 +136,7 @@ function LineItemsEditor({
       </Button>
       {items.length > 0 && (
         <p className="text-xs text-slate-500 pt-1">
-          Total: ₹{items.reduce((s, it) => s + it.quantity * it.unitPrice, 0).toLocaleString('en-IN')}
+          Total: ${items.reduce((s, it) => s + it.quantity * it.unitPrice, 0).toLocaleString('en-US')}
         </p>
       )}
     </div>

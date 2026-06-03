@@ -33,7 +33,7 @@ export default function ShipmentsPage() {
           ),
         },
         { header: 'ETA', render: (r) => (r.expectedDelivery ? new Date(r.expectedDelivery).toLocaleDateString() : '—') },
-        { header: 'Cost', render: (r) => `₹${(r.cost || 0).toLocaleString('en-IN')}` },
+        { header: 'Cost', render: (r) => `$${(r.cost || 0).toLocaleString('en-US')}` },
       ]}
       fields={[
         { name: 'purchaseOrderId', label: 'Linked PO', type: 'select', optionsEndpoint: '/scm/purchase-orders', optionLabel: 'poNumber' },
@@ -56,7 +56,7 @@ export default function ShipmentsPage() {
         { name: 'dispatchedAt', label: 'Dispatched At', type: 'date' },
         { name: 'expectedDelivery', label: 'Expected Delivery', type: 'date' },
         { name: 'deliveredAt', label: 'Delivered At', type: 'date' },
-        { name: 'cost', label: 'Transport Cost (₹)', type: 'number' },
+        { name: 'cost', label: 'Transport Cost ($)', type: 'number' },
       ]}
     />
   );

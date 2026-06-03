@@ -65,7 +65,7 @@ export default function ScmDashboardPage() {
 
   const s = data?.stats || {};
   const c = data?.charts || {};
-  const inr = (n: number) => `₹${(n || 0).toLocaleString('en-IN')}`;
+  const usd = (n: number) => `$${(n || 0).toLocaleString('en-US')}`;
 
   return (
     <div className="space-y-6">
@@ -75,13 +75,13 @@ export default function ScmDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Kpi icon={<Wallet size={18} />} label="Inventory Value" value={inr(s.inventoryValue)} />
+        <Kpi icon={<Wallet size={18} />} label="Inventory Value" value={usd(s.inventoryValue)} />
         <Kpi icon={<Boxes size={18} />} label="Total Items" value={s.totalItems ?? 0} />
         <Kpi icon={<AlertTriangle size={18} />} label="Low Stock" value={s.lowStock ?? 0} accent="bg-amber-50 text-amber-600" />
         <Kpi icon={<PackageX size={18} />} label="Out of Stock" value={s.outOfStock ?? 0} accent="bg-red-50 text-red-600" />
         <Kpi icon={<CalendarClock size={18} />} label="Expiring ≤ 30d" value={s.expiringSoon ?? 0} accent="bg-amber-50 text-amber-600" />
         <Kpi icon={<Users size={18} />} label="Active Suppliers" value={`${s.activeSuppliers ?? 0}/${s.totalSuppliers ?? 0}`} />
-        <Kpi icon={<Wallet size={18} />} label="Procurement Spend" value={inr(s.procurementSpend)} />
+        <Kpi icon={<Wallet size={18} />} label="Procurement Spend" value={usd(s.procurementSpend)} />
         <Kpi icon={<Clock size={18} />} label="Open POs" value={s.openPurchaseOrders ?? 0} />
         <Kpi icon={<Truck size={18} />} label="In Transit" value={s.shipmentsInTransit ?? 0} />
         <Kpi icon={<AlertTriangle size={18} />} label="Delayed Shipments" value={s.delayedShipments ?? 0} accent="bg-red-50 text-red-600" />

@@ -108,7 +108,7 @@ export default function MaintenanceDetailPage() {
               {log.cost > 0 && (
                 <div>
                   <label className="text-[10px] uppercase font-bold text-slate-400 tracking-widest block mb-1">Cost</label>
-                  <p className="text-sm font-medium">₹ {log.cost}</p>
+                  <p className="text-sm font-medium">$ {log.cost}</p>
                 </div>
               )}
             </div>

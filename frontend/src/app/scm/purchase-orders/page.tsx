@@ -25,7 +25,7 @@ export default function PurchaseOrdersPage() {
         { header: 'PO #', render: (r) => <span className="font-bold text-medical-navy">{r.poNumber}</span> },
         { header: 'Supplier', render: (r) => r.supplierId?.name || '—' },
         { header: 'Items', render: (r) => `${r.items?.length || 0} line(s)` },
-        { header: 'Total', render: (r) => `₹${(r.totalAmount || 0).toLocaleString('en-IN')}` },
+        { header: 'Total', render: (r) => `$${(r.totalAmount || 0).toLocaleString('en-US')}` },
         {
           header: 'Status',
           render: (r) => (

@@ -95,7 +95,7 @@ export default function SuperAnalyticsPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Estimated MRR</p>
-                <h3 className="text-3xl font-bold text-medical-navy">₹ {stats?.mrr?.toLocaleString() || 0}</h3>
+                <h3 className="text-3xl font-bold text-medical-navy">$ {stats?.mrr?.toLocaleString() || 0}</h3>
               </div>
               <div className="w-10 h-10 rounded-xl bg-blue-50 text-medical-blue flex items-center justify-center group-hover:scale-110 transition-transform">
                 <CreditCard size={20} />
