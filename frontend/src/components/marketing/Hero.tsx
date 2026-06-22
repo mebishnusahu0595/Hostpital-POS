@@ -35,7 +35,7 @@ export default function Hero() {
           <div className="absolute -inset-4 bg-gradient-to-r from-medical-blue/20 to-medical-navy/20 blur-3xl opacity-30 -z-10 rounded-[2.5rem]"></div>
           <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-2xl animate-slide-up">
             <Image 
-              src="/images/dashboard-mockup.png" 
+              src="/images/dashboard-mockup.png?v=2" 
               alt="Centralized Medical Solutions Dashboard" 
               width={1200} 
               height={800} 
