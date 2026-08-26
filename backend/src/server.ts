@@ -30,9 +30,25 @@ const app: Express = express();
 const httpServer = createServer(app);
 
 // Initialize Socket.io
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://biomedasset.com',
+  'https://www.biomedasset.com',
+  'http://biomedasset.com',
+  'http://www.biomedasset.com',
+  'http://localhost:3000',
+  'http://50.184.90.90:8080'
+].filter(Boolean) as string[];
+
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
   },
 });
@@ -46,16 +62,16 @@ initCronJobs();
 // Middleware
 app.use(helmet({
   crossOriginResourcePolicy: false,
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "blob:", "http://localhost:3000", "http://localhost:5000"],
-      connectSrc: ["'self'", "http://localhost:3000", "http://localhost:5000", "ws://localhost:5000"],
-    },
-  },
+  contentSecurityPolicy: false,
 }));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());
