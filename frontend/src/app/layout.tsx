@@ -15,6 +15,15 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Centralized Medical Solutions | Advanced Equipment Management",
   description: "Multi-tenant hospital equipment management SaaS platform built for healthcare.",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png' }
+    ]
+  }
 };
 
 export default function RootLayout({
