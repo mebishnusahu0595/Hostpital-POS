@@ -26,7 +26,11 @@ function ScmLoginForm() {
       const { data } = response.data;
       setAuth(data, data.accessToken);
       toast.success(`Welcome back, ${data.name}!`);
-      router.push('/scm/dashboard');
+      if (data.role === 'super_admin') {
+        router.push('/super/dashboard');
+      } else {
+        router.push('/scm/dashboard');
+      }
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Login failed. Please check your credentials.');
     } finally {

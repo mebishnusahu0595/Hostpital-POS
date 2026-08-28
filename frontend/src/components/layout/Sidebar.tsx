@@ -17,6 +17,7 @@ import {
   Megaphone,
   PlusCircle,
   Boxes,
+  History,
   X
 } from 'lucide-react';
 
@@ -29,9 +30,10 @@ export default function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsO
     if (role === 'super_admin') {
       return [
         { label: 'Dashboard', icon: LayoutDashboard, href: '/super/dashboard' },
-        { label: 'Hospitals', icon: Building2, href: '/super/hospitals' },
-        { label: 'Users', icon: Users, href: '/super/users' },
+        { label: 'Facilities', icon: Building2, href: '/super/hospitals' },
+        { label: 'Admins & Users', icon: Users, href: '/super/users' },
         { label: 'Analytics', icon: BarChart3, href: '/super/analytics' },
+        { label: 'Audit Logs', icon: History, href: '/super/audit-logs' },
         { label: 'Announcements', icon: Megaphone, href: '/super/announcements' },
       ];
     }
