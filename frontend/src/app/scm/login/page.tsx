@@ -90,7 +90,7 @@ export default function ScmLoginPage() {
             </Link>
           </div>
 
-          <h1 className="text-3xl font-bold text-medical-navy mb-2">Supply Chain Control</h1>
+          <h1 className="text-3xl font-bold text-medical-navy mb-2">Supply Chain Management Portal</h1>
           <p className="text-slate-500 mb-8">Sign in to manage inventory, procurement, and logistics.</p>
 
           <Suspense fallback={<div className="py-10 text-center text-slate-400">Loading form...</div>}>

@@ -14,10 +14,11 @@ import {
   TrendingUp,
   ClipboardList,
   CalendarClock,
+  UserCog,
   X,
 } from 'lucide-react';
 
-const navItems = [
+const baseNavItems = [
   { label: 'Overview', icon: LayoutDashboard, href: '/scm/dashboard' },
   { label: 'Inventory', icon: Boxes, href: '/scm/inventory' },
   { label: 'Expiry Alerts', icon: CalendarClock, href: '/scm/expiry' },
@@ -32,6 +33,11 @@ const navItems = [
 export default function ScmSidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (v: boolean) => void }) {
   const pathname = usePathname();
   const { user } = useAuthStore();
+
+  const navItems = [...baseNavItems];
+  if (user?.role === 'super_admin') {
+    navItems.splice(1, 0, { label: 'SCM Admins & Staff', icon: UserCog, href: '/scm/users' });
+  }
 
   return (
     <aside
