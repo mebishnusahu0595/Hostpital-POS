@@ -36,6 +36,10 @@ const allowedOrigins = [
   'https://www.biomedasset.com',
   'http://biomedasset.com',
   'http://www.biomedasset.com',
+  'https://scm.cmslinc.com',
+  'http://scm.cmslinc.com',
+  'https://hms.cmslinc.com',
+  'http://hms.cmslinc.com',
   'http://localhost:3000',
   'http://50.184.90.90:8080'
 ].filter(Boolean) as string[];

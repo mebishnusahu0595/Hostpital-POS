@@ -39,7 +39,7 @@ function LoginForm() {
         if (data.role === 'super_admin') {
           router.push('/super/dashboard');
         } else if (data.role === 'scm_manager') {
-          router.push('/scm/dashboard');
+          window.location.href = 'https://scm.cmslinc.com/scm/dashboard';
         } else {
           router.push('/dashboard');
         }

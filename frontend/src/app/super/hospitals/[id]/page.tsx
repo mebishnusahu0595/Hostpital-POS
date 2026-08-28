@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { EditHospitalModal } from '@/components/super/EditHospitalModal';
+import { mediaUrl } from '@/lib/utils';
 
 export default function HospitalDetailPage() {
   const { id } = useParams();
@@ -68,7 +69,7 @@ export default function HospitalDetailPage() {
 
   useEffect(() => {
     if (hospital?.logo) {
-      setLogoUrl(`${process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000'}${hospital.logo}?t=${hospital.updatedAt || Date.now()}`);
+      setLogoUrl(mediaUrl(hospital.logo));
     } else {
       setLogoUrl(null);
     }

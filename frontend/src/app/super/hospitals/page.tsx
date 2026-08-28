@@ -8,6 +8,7 @@ import { Plus, Search, Building2, ChevronRight, Globe, ShieldCheck } from 'lucid
 import Link from 'next/link';
 import { useState } from 'react';
 import { AddHospitalModal } from '@/components/super/AddHospitalModal';
+import { mediaUrl } from '@/lib/utils';
 
 export default function HospitalsManagementPage() {
   const [search, setSearch] = useState('');
@@ -56,7 +57,7 @@ export default function HospitalsManagementPage() {
                     <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-medical-navy shrink-0 overflow-hidden">
                       {h.logo ? (
                         <img 
-                          src={`${process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000'}${h.logo}`} 
+                          src={mediaUrl(h.logo)} 
                           alt="Logo" 
                           className="w-full h-full object-cover" 
                         />

@@ -47,7 +47,6 @@ export default function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean, setIsO
     }
 
     if (role === 'hospital_admin') {
-      items.push({ label: 'Supply Chain', icon: Boxes, href: '/scm/dashboard' });
       items.push({ label: 'Users', icon: Users, href: '/users' });
       items.push({ label: 'Analytics', icon: BarChart3, href: '/analytics' });
       items.push({ label: 'Settings', icon: Settings, href: '/settings' });

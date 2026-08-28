@@ -46,8 +46,8 @@ export default function ScmSidebar({ isOpen, setIsOpen }: { isOpen: boolean; set
             <Boxes size={22} className="text-white" />
           </div>
           <div>
-            <p className="font-bold text-sm leading-tight">OncOrg SCM</p>
-            <p className="text-[10px] text-slate-400 uppercase tracking-wider">Supply Chain</p>
+            <p className="font-bold text-sm leading-tight">CMS Linc SCM</p>
+            <p className="text-[10px] text-slate-400 uppercase tracking-wider">Supply Chain Management</p>
           </div>
         </Link>
         <button onClick={() => setIsOpen(false)} className="lg:hidden text-white/50 hover:text-white">

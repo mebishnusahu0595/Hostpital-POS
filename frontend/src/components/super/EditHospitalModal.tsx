@@ -14,6 +14,7 @@ import { Settings2, Plus } from 'lucide-react';
 import api from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { mediaUrl } from '@/lib/utils';
 
 interface EditHospitalModalProps {
   hospital: any;
@@ -27,7 +28,7 @@ export function EditHospitalModal({ hospital }: EditHospitalModalProps) {
 
   useEffect(() => {
     if (hospital?.logo) {
-      setPreview(`${process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000'}${hospital.logo}?t=${Date.now()}`);
+      setPreview(mediaUrl(hospital.logo));
     } else {
       setPreview(null);
     }

@@ -79,13 +79,13 @@ export default function ScmLoginPage() {
                 <Boxes size={22} className="text-white" />
               </div>
               <div>
-                <p className="font-bold text-medical-navy leading-tight">OncOrg SCM</p>
-                <p className="text-[10px] text-slate-400 uppercase tracking-wider">Supply Chain Module</p>
+                <p className="font-bold text-medical-navy leading-tight">CMS Linc SCM</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-wider">Supply Chain Management</p>
               </div>
             </div>
-            <Link href="/login">
+            <Link href="https://biomedasset.com">
               <Button variant="ghost" size="sm" className="text-slate-500 gap-2 rounded-xl">
-                <ArrowLeft size={16} /> Main Login
+                <ArrowLeft size={16} /> BioMed Asset
               </Button>
             </Link>
           </div>
